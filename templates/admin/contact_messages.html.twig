@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div id="message_processed_error" class="d-none alert alert-warning alert-dismissible fade show" role="alert">
+        Une erreur est survenue, vos modification n'ont pas été sauvegardé
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('admin') }}">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ contact_user.email }}</li>
+            </ol>
+        </nav>
+        <h1 class="text-center h2 my-4">Message de {{ contact_user.email }}</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Message</th>
+                <th scope="col">Traité</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact_message in contact_user.contactMessages %}
+                <tr>
+                    <td>{{ contact_message.name }}</td>
+                    <td>{{ contact_message.message }}</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input data-ea-action="processed"
+                                   data-ea-id="{{ contact_message.id }}"
+                                   class="form-check-input" {{ contact_message.processed ? 'checked' }} type="checkbox"
+                                   id="processed_{{ contact_message.id }}">
+                            <label class="form-check-label" for="processed_{{ contact_message.id }}"></label>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <td colspan="3">Aucun résultat trouvé...</td>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+{% block footer_javascripts %}
+    <script>
+        $(function () {
+            $(document).on('change', '[data-ea-action="processed"]', function () {
+                const $_this = $(this);
+                let baseUrl = '{{ path('admin_ajax_processed_contact_message', {'messageId' : 'message_id'}) }}'
+                $.get(baseUrl.replace('message_id', $_this.data('ea-id')))
+                    .fail(function () {
+                        console.log($_this)
+                        $('#message_processed_error').removeClass('d-none');
+                        $_this.prop("checked", !$_this.is(':checked'))
+                    });
+            })
+        })
+    </script>
+{% endblock footer_javascripts %}

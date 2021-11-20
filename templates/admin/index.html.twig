@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <div>
+        <h1 class="text-center h2 my-4">Liste des contacts</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Email</th>
+                <th scope="col">Messages</th>
+                <th scope="col">Voir messages</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for contact_user in contact_users %}
+                <tr>
+                    <td>{{ contact_user.email }}</td>
+                    <td>{{ contact_user.contactMessages|length }}</td>
+                    <td><a href="{{ path('admin_user_manage_message', {'userId': contact_user.id}) }}">Voir</a></td>
+                </tr>
+            {% else %}
+                <td colspan="3">Aucun résultat trouvé...</td>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
