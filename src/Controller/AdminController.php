@@ -39,13 +39,16 @@ class AdminController extends AbstractController
      * @Route("/admin/contact-message/{messageId}", name="admin_ajax_processed_contact_message")
      * @ParamConverter("contactMessage", options={"id" = "messageId"})
      */
-    public function ajaxProcessedContactMessage(ContactMessage $contactMessage, EntityManagerInterface $em)
-    {
+    public function ajaxProcessedContactMessage(
+        ContactMessage $contactMessage,
+        EntityManagerInterface $em
+    ) {
 
         $contactMessage->setProcessed(!$contactMessage->getProcessed());
         $em->persist($contactMessage);
         $em->flush();
-        
+
+
         return new JsonResponse([
             'success' => true,
         ]);

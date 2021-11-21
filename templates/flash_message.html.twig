@@ -6,11 +6,11 @@
 {% endfor %}
 
 <script>
-    const alerts = Array.from(document.getElementsByClassName('alert'));
+    const alerts = $('.alert');
 
     setTimeout(function () {
-        alerts.forEach(function (element) {
-            element.style.display = "none"
+        alerts.each(function (index, element) {
+            $(element).hide();
         })
     }, 5000);
 </script>
