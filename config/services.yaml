@@ -22,7 +22,3 @@ services:
       - '../src/Tests/'
 
     # add more service definitions when explicit configuration is needed
-  contact_message_subscriber:
-    class: App\Subscriber\ContactMessageSubscriber
-    tags:
-      - { name: kernel.event_subscriber }
