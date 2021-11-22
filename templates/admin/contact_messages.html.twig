@@ -24,7 +24,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for contact_message in contact_user.contactMessages %}
+            {% for contact_message in pagination %}
                 <tr>
                     <td>{{ contact_message.name }}</td>
                     <td>{{ contact_message.message }}</td>
@@ -43,6 +43,7 @@
             {% endfor %}
             </tbody>
         </table>
+        {{ knp_pagination_render(pagination) }}
     </div>
 {% endblock %}
 {% block footer_javascripts %}

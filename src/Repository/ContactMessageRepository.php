@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\ContactMessage;
+use App\Entity\ContactUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,15 +38,12 @@ class ContactMessageRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?ContactMessage
+    public function findByContactUserQuery(ContactUser $contactUser): Query
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->andWhere('c.contactUser = :contactUser')
+            ->setParameter('contactUser', $contactUser)
+            ->getQuery();
     }
-    */
+
 }

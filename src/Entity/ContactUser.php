@@ -26,6 +26,7 @@ class ContactUser
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email(mode="strict")
+     * @Assert\NotBlank
      */
     private $email;
 

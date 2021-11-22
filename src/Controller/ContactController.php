@@ -29,7 +29,7 @@ class ContactController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $em->persist($contactMessage);
             $em->persist($contactMessage->getContactUser());
